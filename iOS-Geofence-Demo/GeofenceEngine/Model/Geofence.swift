@@ -86,3 +86,19 @@ extension Geofence {
     return []
   }
 }
+
+// MARK: - Notification Region
+extension Geofence {
+  var region: CLCircularRegion {
+    // 1
+    let region = CLCircularRegion(
+      center: coordinate,
+      radius: radius,
+      identifier: identifier)
+
+    // 2
+    region.notifyOnEntry = (eventType == .onEntry)
+    region.notifyOnExit = !region.notifyOnEntry
+    return region
+  }
+}
