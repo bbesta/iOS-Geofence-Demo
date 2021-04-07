@@ -14,16 +14,19 @@ enum PreferencesKeys: String {
 }
 
 class GeofenceViewController: UIViewController {
-    private let map : MKMapView = {
-        let map = MKMapView()
-        return map
-    }()
+//    private let map : MKMapView = {
+//        let map = MKMapView()
+//        return map
+//    }()
+    @IBOutlet weak var map: MKMapView!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(map)
         title = "Home"
+        let locationBarButtonItem = UIBarButtonItem(title: "Location", style: .done, target: self, action: #selector(zoomToCurrentLocation(sender:)))
+            self.navigationItem.leftBarButtonItem  = locationBarButtonItem
+        
         GeofenceMaanger.shared.getUserLocation(completion: { [weak self] location in
             DispatchQueue.main.async {
                 guard let strongSelf = self else{
@@ -37,17 +40,20 @@ class GeofenceViewController: UIViewController {
         
         
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        map.frame = view.bounds
-    }
+
     func addMapPin(with location: CLLocation) {
         let pin = MKPointAnnotation()
         pin.coordinate = location.coordinate
         map.setRegion(MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.7, longitudeDelta: 0.7)), animated: true)
         map.addAnnotation(pin)
+        map.zoomToLocation(self.map.userLocation.location)
     }
-    
+    // MARK: - Other functions
+    @objc func zoomToCurrentLocation(sender: AnyObject) {
+        map.zoomToLocation(self.map.userLocation.location)
+      
+        
+    }
     
 
 }
@@ -71,10 +77,41 @@ extension GeofenceViewController: MKMapViewDelegate {
     }
     return nil
   }
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+      if overlay is MKCircle {
+        let circleRenderer = MKCircleRenderer(overlay: overlay)
+        circleRenderer.lineWidth = 1.0
+        circleRenderer.strokeColor = .purple
+        circleRenderer.fillColor = UIColor.purple.withAlphaComponent(0.4)
+        return circleRenderer
+      }
+      return MKOverlayRenderer(overlay: overlay)
+    }
+
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+      // Delete geotification
+      guard let geofence = view.annotation as? Geofence else { return }
+        GeofenceMaanger.shared.stopMonitoring(geofence: geofence)
+     
+        GeofenceMaanger.shared.removeGeofence(geofence)
+        GeofenceMaanger.shared.saveAllGeofence()
+    }
 }
 // MARK: - Geofence Delegate
 extension GeofenceViewController : GeofenceDelegate{
+    func updateUserLocation(_ authorization: Bool) {
+        map.showsUserLocation = authorization
+//        map.zoomToLocation(map.userLocation.location)
+    }
     
+    
+    func addAnotation(geofence: Geofence) {
+        map.addAnnotation(geofence)
+    
+    }
+    func removeAnotation(geofence: Geofence) {
+        map.removeAnnotation(geofence)
+    }
     
     func didStartMontioring() {
         //Required
@@ -98,4 +135,12 @@ extension GeofenceViewController : GeofenceDelegate{
           manager.stopMonitoring(for: circularRegion)
         }
     }
+    
+}
+extension MKMapView {
+  func zoomToLocation(_ location: CLLocation?) {
+    guard let coordinate = location?.coordinate else { return }
+    let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10_000, longitudinalMeters: 10_000)
+    setRegion(region, animated: true)
+  }
 }

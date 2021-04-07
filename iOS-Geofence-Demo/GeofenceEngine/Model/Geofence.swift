@@ -93,7 +93,7 @@ extension Geofence {
     // 1
     let region = CLCircularRegion(
       center: coordinate,
-      radius: radius,
+      radius: 100,
       identifier: identifier)
 
     // 2

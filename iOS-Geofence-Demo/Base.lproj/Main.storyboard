@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,13 +11,30 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="GeofenceViewController" customModule="iOS_Geofence_Demo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="X5b-lg-fgN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oad-Zy-CNf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="9ed-sv-e5B"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="92G-QA-kiN"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Oad-Zy-CNf" firstAttribute="top" secondItem="92G-QA-kiN" secondAttribute="top" id="IG2-5y-0UB"/>
+                            <constraint firstItem="Oad-Zy-CNf" firstAttribute="leading" secondItem="X5b-lg-fgN" secondAttribute="leading" id="MdK-DK-H54"/>
+                            <constraint firstAttribute="trailing" secondItem="Oad-Zy-CNf" secondAttribute="trailing" id="WhP-BH-PRl"/>
+                            <constraint firstItem="Oad-Zy-CNf" firstAttribute="bottom" secondItem="X5b-lg-fgN" secondAttribute="bottom" id="s2S-0B-NAB"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zwm-70-Hh5"/>
+                    <connections>
+                        <outlet property="map" destination="Oad-Zy-CNf" id="h4I-2G-J4r"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -43,9 +59,4 @@
             <point key="canvasLocation" x="18.840579710144929" y="93.75"/>
         </scene>
     </scenes>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
