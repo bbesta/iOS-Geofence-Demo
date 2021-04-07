@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+
 class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
     static let shared = GeofenceMaanger()
     let manager = CLLocationManager()
@@ -17,6 +18,8 @@ class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
         manager.delegate = self
         manager.startUpdatingLocation()
+        manager.distanceFilter = 100
+        
     }
     func locationManager(_ manager : CLLocationManager, didUpdateLocations locations : [CLLocation]) {
         guard let location = locations.first else {
@@ -25,5 +28,6 @@ class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
         completion?(location)
         manager.stopUpdatingLocation()
     }
-   
+    
 }
+

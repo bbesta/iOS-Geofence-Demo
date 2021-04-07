@@ -16,6 +16,7 @@
 		AD89FB2F261D9CEE007EDB2D /* iOS_Geofence_DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB2E261D9CEE007EDB2D /* iOS_Geofence_DemoUITests.swift */; };
 		AD89FB79261DD60F007EDB2D /* GeofenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB78261DD60F007EDB2D /* GeofenceManager.swift */; };
 		AD89FB8B261DD8AA007EDB2D /* GeofenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */; };
+		AD89FB99261DEB5B007EDB2D /* Geofence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB98261DEB5B007EDB2D /* Geofence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		AD89FB30261D9CEE007EDB2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD89FB78261DD60F007EDB2D /* GeofenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceManager.swift; sourceTree = "<group>"; };
 		AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceViewController.swift; sourceTree = "<group>"; };
+		AD89FB98261DEB5B007EDB2D /* Geofence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geofence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 		AD89FB77261DD1A0007EDB2D /* GeofenceEngine */ = {
 			isa = PBXGroup;
 			children = (
+				AD89FB97261DEB49007EDB2D /* Model */,
 				AD89FB89261DD860007EDB2D /* View */,
 				AD89FB78261DD60F007EDB2D /* GeofenceManager.swift */,
 			);
@@ -145,6 +148,14 @@
 				AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		AD89FB97261DEB49007EDB2D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AD89FB98261DEB5B007EDB2D /* Geofence.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,6 +290,7 @@
 			files = (
 				AD89FB0D261D9CEC007EDB2D /* AppDelegate.swift in Sources */,
 				AD89FB0F261D9CEC007EDB2D /* SceneDelegate.swift in Sources */,
+				AD89FB99261DEB5B007EDB2D /* Geofence.swift in Sources */,
 				AD89FB8B261DD8AA007EDB2D /* GeofenceViewController.swift in Sources */,
 				AD89FB79261DD60F007EDB2D /* GeofenceManager.swift in Sources */,
 			);
