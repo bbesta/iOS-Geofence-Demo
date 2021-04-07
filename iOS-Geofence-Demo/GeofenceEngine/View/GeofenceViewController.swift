@@ -54,7 +54,7 @@ class GeofenceViewController: UIViewController {
 // MARK: - MapView Delegate
 extension GeofenceViewController: MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-    let identifier = "myGeotification"
+    let identifier = "myGeofence"
     if annotation is Geofence {
       var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
       if annotationView == nil {
@@ -71,4 +71,31 @@ extension GeofenceViewController: MKMapViewDelegate {
     }
     return nil
   }
+}
+// MARK: - Geofence Delegate
+extension GeofenceViewController : GeofenceDelegate{
+    
+    
+    func didStartMontioring() {
+        //Required
+    }
+    
+    func didStopMontioring() {
+        //Required
+    }
+    
+    func didEnterGeofence(geofence: Geofence) {
+        let fenceRegion = geofence.region
+        manager.startMonitoring(for: fenceRegion)
+    }
+    func didExitGeofence(geofence: Geofence) {
+        for region in manager.monitoredRegions {
+          guard
+            let circularRegion = region as? CLCircularRegion,
+            circularRegion.identifier == geofence.identifier
+          else { continue }
+
+          manager.stopMonitoring(for: circularRegion)
+        }
+    }
 }

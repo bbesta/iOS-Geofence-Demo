@@ -8,11 +8,19 @@
 import UIKit
 import CoreLocation
 
+protocol GeofenceDelegate : class {
+    func didEnterGeofence(geofence : Geofence)
+    func didExitGeofence(geofence : Geofence)
+    func didStartMontioring()
+    func didStopMontioring()
+}
+let manager = CLLocationManager()
 class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
     static let shared = GeofenceMaanger()
-    let manager = CLLocationManager()
+    
     var completion : ((CLLocation) -> Void)?
     var managerCompletion : ((CLLocationManager) -> Void)?
+    weak var delegate: GeofenceDelegate?
     
     var geofences: [Geofence] = []
     
@@ -101,8 +109,9 @@ class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
         //Print Error or pass Error
         return
       }
-        let fenceRegion = geofence.region
-      manager.startMonitoring(for: fenceRegion)
+//        let fenceRegion = geofence.region
+//      manager.startMonitoring(for: fenceRegion)
+        delegate?.didEnterGeofence(geofence: geofence)
     }
 
     func stopMonitoring(geofence: Geofence) {
@@ -112,7 +121,9 @@ class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
           circularRegion.identifier == geofence.identifier
         else { continue }
 
-        manager.stopMonitoring(for: circularRegion)
+//        manager.stopMonitoring(for: circularRegion)
+        delegate?.didExitGeofence(geofence: geofence)
+        
       }
     }
     

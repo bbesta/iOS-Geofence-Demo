@@ -55,6 +55,9 @@
 		AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceViewController.swift; sourceTree = "<group>"; };
 		AD89FB98261DEB5B007EDB2D /* Geofence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geofence.swift; sourceTree = "<group>"; };
 		AD89FBA1261DFA4F007EDB2D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		AD89FBAD261E1DB0007EDB2D /* Apple.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Apple.gpx; sourceTree = "<group>"; };
+		AD89FBAE261E1DC6007EDB2D /* Google.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Google.gpx; sourceTree = "<group>"; };
+		AD89FBAF261E1DD9007EDB2D /* SimulatedLocations.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SimulatedLocations.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,7 @@
 		AD89FB0B261D9CEC007EDB2D /* iOS-Geofence-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				AD89FBAC261E1D8F007EDB2D /* GPX */,
 				AD89FBA0261DFA1E007EDB2D /* Utilities */,
 				AD89FB77261DD1A0007EDB2D /* GeofenceEngine */,
 				AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */,
@@ -167,6 +171,16 @@
 				AD89FBA1261DFA4F007EDB2D /* Utilities.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		AD89FBAC261E1D8F007EDB2D /* GPX */ = {
+			isa = PBXGroup;
+			children = (
+				AD89FBAD261E1DB0007EDB2D /* Apple.gpx */,
+				AD89FBAE261E1DC6007EDB2D /* Google.gpx */,
+				AD89FBAF261E1DD9007EDB2D /* SimulatedLocations.gpx */,
+			);
+			path = GPX;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
