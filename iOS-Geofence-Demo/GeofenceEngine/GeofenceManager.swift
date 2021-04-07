@@ -55,11 +55,7 @@ class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
       }
     }
 
-    func locationManager(
-      _ manager: CLLocationManager,
-      monitoringDidFailFor region: CLRegion?,
-      withError error: Error
-    ) {
+    func locationManager(_ manager: CLLocationManager,monitoringDidFailFor region: CLRegion?,withError error: Error) {
       guard let region = region else {
         print("Monitoring failed for unknown region")
         return
@@ -101,13 +97,10 @@ class GeofenceMaanger :NSObject, CLLocationManagerDelegate {
     
     // MARK: Put monitoring functions below
     func startMonitoring(geofence: Geofence) {
-      // 1
       if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
         //Print Error or pass Error
         return
       }
-
-      // 2
         let fenceRegion = geofence.region
       manager.startMonitoring(for: fenceRegion)
     }
