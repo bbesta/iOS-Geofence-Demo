@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		AD89FB0D261D9CEC007EDB2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */; };
 		AD89FB0F261D9CEC007EDB2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */; };
-		AD89FB11261D9CEC007EDB2D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB10261D9CEC007EDB2D /* ViewController.swift */; };
 		AD89FB14261D9CEC007EDB2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD89FB12261D9CEC007EDB2D /* Main.storyboard */; };
 		AD89FB16261D9CEE007EDB2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD89FB15261D9CEE007EDB2D /* Assets.xcassets */; };
 		AD89FB19261D9CEE007EDB2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD89FB17261D9CEE007EDB2D /* LaunchScreen.storyboard */; };
 		AD89FB24261D9CEE007EDB2D /* iOS_Geofence_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB23261D9CEE007EDB2D /* iOS_Geofence_DemoTests.swift */; };
 		AD89FB2F261D9CEE007EDB2D /* iOS_Geofence_DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB2E261D9CEE007EDB2D /* iOS_Geofence_DemoUITests.swift */; };
+		AD89FB79261DD60F007EDB2D /* GeofenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB78261DD60F007EDB2D /* GeofenceManager.swift */; };
+		AD89FB8B261DD8AA007EDB2D /* GeofenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +39,6 @@
 		AD89FB09261D9CEC007EDB2D /* iOS-Geofence-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Geofence-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AD89FB10261D9CEC007EDB2D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AD89FB13261D9CEC007EDB2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD89FB15261D9CEE007EDB2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD89FB18261D9CEE007EDB2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +49,8 @@
 		AD89FB2A261D9CEE007EDB2D /* iOS-Geofence-DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-Geofence-DemoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD89FB2E261D9CEE007EDB2D /* iOS_Geofence_DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_Geofence_DemoUITests.swift; sourceTree = "<group>"; };
 		AD89FB30261D9CEE007EDB2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD89FB78261DD60F007EDB2D /* GeofenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceManager.swift; sourceTree = "<group>"; };
+		AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +101,9 @@
 		AD89FB0B261D9CEC007EDB2D /* iOS-Geofence-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				AD89FB77261DD1A0007EDB2D /* GeofenceEngine */,
 				AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */,
 				AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */,
-				AD89FB10261D9CEC007EDB2D /* ViewController.swift */,
 				AD89FB12261D9CEC007EDB2D /* Main.storyboard */,
 				AD89FB15261D9CEE007EDB2D /* Assets.xcassets */,
 				AD89FB17261D9CEE007EDB2D /* LaunchScreen.storyboard */,
@@ -126,6 +128,23 @@
 				AD89FB30261D9CEE007EDB2D /* Info.plist */,
 			);
 			path = "iOS-Geofence-DemoUITests";
+			sourceTree = "<group>";
+		};
+		AD89FB77261DD1A0007EDB2D /* GeofenceEngine */ = {
+			isa = PBXGroup;
+			children = (
+				AD89FB89261DD860007EDB2D /* View */,
+				AD89FB78261DD60F007EDB2D /* GeofenceManager.swift */,
+			);
+			path = GeofenceEngine;
+			sourceTree = "<group>";
+		};
+		AD89FB89261DD860007EDB2D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +277,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD89FB11261D9CEC007EDB2D /* ViewController.swift in Sources */,
 				AD89FB0D261D9CEC007EDB2D /* AppDelegate.swift in Sources */,
 				AD89FB0F261D9CEC007EDB2D /* SceneDelegate.swift in Sources */,
+				AD89FB8B261DD8AA007EDB2D /* GeofenceViewController.swift in Sources */,
+				AD89FB79261DD60F007EDB2D /* GeofenceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
