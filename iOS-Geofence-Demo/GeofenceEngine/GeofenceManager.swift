@@ -51,7 +51,6 @@ class GeofenceManager :NSObject {
 
             if i == 0 {
             
-//                let region = regionList.object(at: i) as! String
             let region = regionList[0]
 
             let regionArr = region.components(separatedBy: ",")
@@ -72,7 +71,6 @@ class GeofenceManager :NSObject {
                 self.startMonitoring(geofence:geofence)
         }
         else {
-//                let region = regionList.object(at: i) as! String
             let region = regionList[1]
 
             let regionArr = region.components(separatedBy: ",")
@@ -92,15 +90,14 @@ class GeofenceManager :NSObject {
             self.geofences.append(geofence)
             self.startMonitoring(geofence:geofence)
         }
-        
-//            self.locationManager.startMonitoring(for: self.geofences.region[0])
+  
         }
     }
         
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        if let location = locations.last {
-            Log.i("\(locations)")
+            Log.d("\(locations)")
             completion?(locations)
 //        }
     }
@@ -181,7 +178,7 @@ extension GeofenceManager: CLLocationManagerDelegate {
     ) {
       if region is CLCircularRegion {
         delegate?.didEnterGeofence(region: region as! CLCircularRegion)
-        handleEvent(for: region)
+        handleEntryEvent(for: region)
       }
         
        
@@ -193,15 +190,19 @@ extension GeofenceManager: CLLocationManagerDelegate {
     ) {
       if region is CLCircularRegion {
         delegate?.didExitGeofence(region: region as! CLCircularRegion)
-        handleEvent(for: region)
+        handleExitEvent(for: region)
       }
         
     }
-  func handleEvent(for region: CLRegion) {
-    Log.i("Geofence triggered!")
+  func handleExitEvent(for region: CLRegion) {
+    Log.i("Exit Geofence triggered!")
     
   }
 
+    func handleEntryEvent(for region: CLRegion) {
+      Log.i("Entry Geofence triggered!")
+      
+    }
     func locationManager(_ manager: CLLocationManager,monitoringDidFailFor region: CLRegion?,withError error: Error) {
       guard let region = region else {
         
