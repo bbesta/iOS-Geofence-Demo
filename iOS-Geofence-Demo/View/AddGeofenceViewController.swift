@@ -4,7 +4,7 @@
 //
 //  Created by Balaji on 08/04/21.
 //
-// This inforamtin barrowd from https://www.raywenderlich.com/17649843-geofencing-with-core-location-getting-started
+// This class borrowed from https://www.raywenderlich.com/17649843-geofencing-with-core-location-getting-started
 
 import UIKit
 import MapKit

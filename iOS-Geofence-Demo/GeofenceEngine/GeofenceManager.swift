@@ -96,10 +96,8 @@ class GeofenceManager :NSObject {
         
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        if let location = locations.last {
             Log.d("\(locations)")
             completion?(locations)
-//        }
     }
     
     
@@ -173,21 +171,14 @@ extension GeofenceManager: CLLocationManagerDelegate {
         Log.w(message)
       }
     }
-    func locationManager(_ manager: CLLocationManager,
-      didEnterRegion region: CLRegion
-    ) {
+    func locationManager(_ manager: CLLocationManager,didEnterRegion region: CLRegion) {
       if region is CLCircularRegion {
         delegate?.didEnterGeofence(region: region as! CLCircularRegion)
         handleEntryEvent(for: region)
       }
-        
-       
-        
     }
 
-    func locationManager(_ manager: CLLocationManager,
-      didExitRegion region: CLRegion
-    ) {
+    func locationManager(_ manager: CLLocationManager,didExitRegion region: CLRegion) {
       if region is CLCircularRegion {
         delegate?.didExitGeofence(region: region as! CLCircularRegion)
         handleExitEvent(for: region)

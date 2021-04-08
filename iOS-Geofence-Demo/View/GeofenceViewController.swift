@@ -115,7 +115,6 @@ extension GeofenceViewController: MKMapViewDelegate {
 // MARK: - Geofence Delegate
 extension GeofenceViewController : GeofenceDelegate{
 
-    
     func addAnotation(geofence: Geofence) {
         map.addAnnotation(geofence)
     
