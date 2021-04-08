@@ -12,6 +12,7 @@ Setup Geofences and get notifications when the device enters or leaves the geofe
 
 
 ## Technical Design Note
+Below is a high level technical design diagram:
 
 ￼<p align="center">
 <img alt="WoosmapGeofencing" src="https://github.com/bbesta/iOS-Geofence-Demo/blob/main/README.rtfd/Screenshot%202021-04-08%20at%202.58.49%20PM.png" width="80%">
@@ -20,46 +21,15 @@ Setup Geofences and get notifications when the device enters or leaves the geofe
 The GeoFence App  includes modules :
 - ### 1.Geofence Engine
 - ### 2.Utilities
-- ### 3.GPX
-- ### 4.logger
+- ### 3.Logger
+
 
 
 # Geofence Engine
-The View Is Just a Ui with having two parts 
- - Model
- - View
- - Geofence Manager
+This is heart of the app, a reusable module decoupled from view and view models.
+ - Geofence, a model class representing the geofence, consists of name, lat, long and radius.
+ - GeofenceManager, this is responsible for all business logic to manage the geofences. CorelocationManager is part of this class.
+- GeofenceManagerDelegate, a protocol with set of interfaces; a delegate can confirm to this protocol and get the fence entry/exit events.
 
-### Model is represent the codingkey of objects, represent the MKAnnotation and notification for the region
-### View Map Is Pointing all the GeoFences with red Marker .
-You can Longpress on the Map To Add that Respective Location as Geofence
-
-### The Logger is showing all the entries,exit and messages [Info or Error] with time and index.
-eg.
-### Geofence Manager
-The Engine is the Logical Part to Manage and Add GeoFence , its having Three Parts
-- [FenceManager] 
-- [GeoFence] 
-- [GeoFenceBroadCastReceiver] 
-  
-- FenceManager:
-> The Job of Fence Manager is to Initialize the GeoFenceClient and using a Fence Obj as Entity to build the GeoFence.
-- GeoFence:
-> GeoFence is a Single Entity which contains information about geofence
-> like (ID: String, lat: Double,long:Double, radius: Float, name:String,transitionTypes: Int) . 
-- GeoFenceBroadcastReceiver:
-> The job of GBR is to receive the pending intents for every GeoFence location and show it according to the transaction type or error on the UI.
-
-
-# Utilities:
-The Util contains two Things  
-  - Show the alert message on view 
-
-## Logger:
-- This is just a model class and with an enum class 
-### Inspired by:
-[Geofence iOS](https://www.raywenderlich.com/5470-geofencing-with-core-location-getting-started)
-
-
-
-
+# Logger
+The Logger is a helper class to print/console/write to DB/3rd party services, all the logs from the app.
