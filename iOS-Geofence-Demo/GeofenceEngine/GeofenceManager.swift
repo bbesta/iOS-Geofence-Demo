@@ -25,7 +25,7 @@ class GeofenceManager :NSObject {
     var managerCompletion : ((CLLocationManager) -> Void)?
     weak var delegate: GeofenceDelegate?
     var geofences: [Geofence] = []
-    var regionList : [String]! = []
+    
     
     public func getUserLocation(completion : @escaping (([CLLocation]) -> Void)){
         self.completion =  completion
@@ -35,68 +35,10 @@ class GeofenceManager :NSObject {
         locationManager.startUpdatingLocation()
         locationManager.distanceFilter = 100
         loadAllGeofences()
-
-        updateGeofenceManually()
     }
 
-    //Update Geofence Manually
-    func  updateGeofenceManually()  {
-        
-        regionList.append("37.3349285,-122.011033")                    //Apple
-
-        regionList.append("37.422,-122.084058") //Google
-        for i in 0..<regionList.count
-
-        {
-
-            if i == 0 {
-            
-            let region = regionList[0]
-
-            let regionArr = region.components(separatedBy: ",")
-
-          
-            let lat = (regionArr[0] as NSString).doubleValue
-
-            let long = (regionArr[1] as NSString).doubleValue
-            
-            let geofenceRegionCenter = CLLocationCoordinate2DMake(lat, long)
-            let geofence = Geofence(
-                coordinate: geofenceRegionCenter,
-              radius: 100,
-              identifier: "Apple",
-              note: "Entry Apple!",
-                eventType: .onEntry)
-                self.geofences.append(geofence)
-                self.startMonitoring(geofence:geofence)
-        }
-        else {
-            let region = regionList[1]
-
-            let regionArr = region.components(separatedBy: ",")
-
-          
-            let lat = (regionArr[0] as NSString).doubleValue
-
-            let long = (regionArr[1] as NSString).doubleValue
-            
-            let geofenceRegionCenter = CLLocationCoordinate2DMake(lat, long)
-            let geofence = Geofence(
-                coordinate: geofenceRegionCenter,
-              radius: 100,
-              identifier: "Google",
-              note: "Exit Goole!",
-                eventType: .onExit)
-            self.geofences.append(geofence)
-            self.startMonitoring(geofence:geofence)
-        }
-  
-        }
-    }
-        
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            Log.d("\(locations)")
+//            Log.d("\(locations)")
             completion?(locations)
     }
     
@@ -174,26 +116,26 @@ extension GeofenceManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager,didEnterRegion region: CLRegion) {
       if region is CLCircularRegion {
         delegate?.didEnterGeofence(region: region as! CLCircularRegion)
-        handleEntryEvent(for: region)
+//        handleEntryEvent(for: region)
       }
     }
 
     func locationManager(_ manager: CLLocationManager,didExitRegion region: CLRegion) {
       if region is CLCircularRegion {
         delegate?.didExitGeofence(region: region as! CLCircularRegion)
-        handleExitEvent(for: region)
+//        handleExitEvent(for: region)
       }
         
     }
-  func handleExitEvent(for region: CLRegion) {
-    Log.i("Exit Geofence triggered!")
-    
-  }
-
-    func handleEntryEvent(for region: CLRegion) {
-      Log.i("Entry Geofence triggered!")
-      
-    }
+//  func handleExitEvent(for region: CLRegion) {
+//    Log.i("Exit Geofence triggered!")
+//
+//  }
+//
+//    func handleEntryEvent(for region: CLRegion) {
+//      Log.i("Entry Geofence triggered!")
+//
+//    }
     func locationManager(_ manager: CLLocationManager,monitoringDidFailFor region: CLRegion?,withError error: Error) {
       guard let region = region else {
         

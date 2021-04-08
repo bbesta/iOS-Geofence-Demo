@@ -15,6 +15,8 @@ class GeofenceViewController: UIViewController {
 
     @IBOutlet weak var map: MKMapView!
     
+    var regionList : [String]! = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Home"
@@ -36,6 +38,7 @@ class GeofenceViewController: UIViewController {
                 
                 strongSelf.addMapPin(with: location1)
                 strongSelf.addMapPin(with: location2)
+                self?.updateGeofenceManually()
             }
 
         })
@@ -71,6 +74,68 @@ class GeofenceViewController: UIViewController {
       return matched?.note
     }
 
+    //MARK : - Update Geofence Manually
+    func  updateGeofenceManually()  {
+        regionList.removeAll()
+        regionList.append("37.3349285,-122.011033")                    //Apple
+
+        regionList.append("37.422,-122.084058") //Google
+        for i in 0..<regionList.count
+
+        {
+
+            if i == 0 {
+            
+            let region = regionList[0]
+
+            let regionArr = region.components(separatedBy: ",")
+
+          
+            let lat = (regionArr[0] as NSString).doubleValue
+
+            let long = (regionArr[1] as NSString).doubleValue
+            
+            let geofenceRegionCenter = CLLocationCoordinate2DMake(lat, long)
+            let geofence = Geofence(
+                coordinate: geofenceRegionCenter,
+              radius: 100,
+              identifier: "Apple",
+              note: "Entry Apple!",
+                eventType: .onEntry)
+                
+//                let regionObject = CLCircularRegion(center: CLLocationCoordinate2D(latitude: coordinate.latitude,
+//                            longitude: coordinate.longitude), radius: 100, identifier: "Apple")
+//
+                
+                let regionObject = CLCircularRegion(center: geofenceRegionCenter, radius: 10, identifier: "Apple")
+                
+                GeofenceManager.shared.locationManager.startMonitoring(for:regionObject)
+        }
+        else {
+            let region = regionList[1]
+
+            let regionArr = region.components(separatedBy: ",")
+
+          
+            let lat = (regionArr[0] as NSString).doubleValue
+
+            let long = (regionArr[1] as NSString).doubleValue
+            
+            let geofenceRegionCenter = CLLocationCoordinate2DMake(lat, long)
+            let geofence = Geofence(
+                coordinate: geofenceRegionCenter,
+              radius: 100,
+              identifier: "Google",
+              note: "Exit Goole!",
+                eventType: .onExit)
+//            GeofenceManager.shared.startMonitoring(geofence:geofence)
+            let regionObject = CLCircularRegion(center: geofenceRegionCenter, radius: 10, identifier: "Google")
+            
+            GeofenceManager.shared.locationManager.startMonitoring(for:regionObject)
+        }
+  
+        }
+    }
 }
 // MARK: - MapView Delegate
 extension GeofenceViewController: MKMapViewDelegate {
@@ -124,13 +189,17 @@ extension GeofenceViewController : GeofenceDelegate{
     }
 
     func didEnterGeofence(region : CLCircularRegion) {
-        Log.d(region.identifier)
+//        Log.d(region.identifier)
+        Log.i("\(region.identifier)")
         guard let message = note(from: region.identifier) else { return }
         showAlert(withTitle: "alert", message: message)
+        Log.i(message)
     }
     func didExitGeofence(region : CLCircularRegion) {
+        Log.i("\(region.identifier)")
         guard let message = note(from: region.identifier) else { return }
         showAlert(withTitle: "alert", message: message)
+        Log.i(message)
     }
     
 }
