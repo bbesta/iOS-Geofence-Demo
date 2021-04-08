@@ -14,7 +14,7 @@ Setup Geofences and get notifications when the device enters or leaves the geofe
 ## Technical Design Note
 
 ￼<p align="center">
-<img alt="WoosmapGeofencing" src="https://github.com/bbesta/iOS-Geofence-Demo/blob/main/README.rtfd/Screenshot%202021-04-08%20at%202.58.49%20PM.png" width="30%">
+<img alt="WoosmapGeofencing" src="https://github.com/bbesta/iOS-Geofence-Demo/blob/main/README.rtfd/Screenshot%202021-04-08%20at%202.58.49%20PM.png" width="80%">
 </p>
 
 The GeoFence App  includes modules :
