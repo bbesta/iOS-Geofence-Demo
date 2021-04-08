@@ -53,7 +53,4 @@ The Util contains two Things
 
 ## Logger:
 - This is just a model class and with an enum class 
-## Util:
-- The Util class is having only one method namely errorMessage just to check the error type .
-
 
