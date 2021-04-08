@@ -121,6 +121,7 @@
 		AD89FB0B261D9CEC007EDB2D /* iOS-Geofence-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				AD89FB89261DD860007EDB2D /* View */,
 				AD89FBAC261E1D8F007EDB2D /* GPX */,
 				AD89FBA0261DFA1E007EDB2D /* Utilities */,
 				AD89FB77261DD1A0007EDB2D /* GeofenceEngine */,
@@ -156,7 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				AD89FB97261DEB49007EDB2D /* Model */,
-				AD89FB89261DD860007EDB2D /* View */,
 				AD89FB78261DD60F007EDB2D /* GeofenceManager.swift */,
 			);
 			path = GeofenceEngine;

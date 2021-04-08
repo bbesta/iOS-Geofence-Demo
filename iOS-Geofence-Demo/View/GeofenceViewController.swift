@@ -9,9 +9,7 @@ import MapKit
 import UIKit
 import CoreLocation
 
-enum PreferencesKeys: String {
-  case savedItems
-}
+
 
 class GeofenceViewController: UIViewController {
 
@@ -29,7 +27,15 @@ class GeofenceViewController: UIViewController {
                     return
                 }
 
-                strongSelf.addMapPin(with: location)
+//                strongSelf.addMapPin(with: location)
+                //Manual Loaction update
+                let location1: CLLocation = CLLocation(latitude: 37.3349285,
+                  longitude: -122.011033)
+                let location2: CLLocation = CLLocation(latitude: 37.422,
+                  longitude: -122.084058)
+                
+                strongSelf.addMapPin(with: location1)
+                strongSelf.addMapPin(with: location2)
             }
 
         })
@@ -98,7 +104,7 @@ extension GeofenceViewController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-      // Delete geotification
+      // Delete geofence
       guard let geofence = view.annotation as? Geofence else { return }
         GeofenceManager.shared.stopMonitoring(geofence: geofence)
      
@@ -138,7 +144,7 @@ extension MKMapView {
 }
 // MARK: AddGeofenceViewControllerDelegate
 extension GeofenceViewController: AddGeofenceViewControllerDelegate {
-    func addGeofenceViewController(_ controller: AddGeofenceViewController, didAddGeotification geofence: Geofence) {
+    func addGeofenceViewController(_ controller: AddGeofenceViewController, didAddGeofence geofence: Geofence) {
         controller.dismiss(animated: true, completion: nil)
         geofence.clampRadius(maxRadius:
         GeofenceManager.shared.locationManager.maximumRegionMonitoringDistance)

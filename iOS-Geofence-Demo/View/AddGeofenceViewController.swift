@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 protocol AddGeofenceViewControllerDelegate: class {
-  func addGeofenceViewController(_ controller: AddGeofenceViewController, didAddGeotification: Geofence)
+  func addGeofenceViewController(_ controller: AddGeofenceViewController, didAddGeofence: Geofence)
 }
 
 class AddGeofenceViewController: UITableViewController {
@@ -50,7 +50,7 @@ class AddGeofenceViewController: UITableViewController {
       identifier: identifier,
       note: note,
       eventType: eventType)
-    delegate?.addGeofenceViewController(self, didAddGeotification: geofence)
+    delegate?.addGeofenceViewController(self, didAddGeofence: geofence)
   }
 
   @IBAction private func onZoomToCurrentLocation(sender: AnyObject) {

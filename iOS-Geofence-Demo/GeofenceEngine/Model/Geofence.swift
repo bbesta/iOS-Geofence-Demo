@@ -80,8 +80,8 @@ extension Geofence {
   public class func allGeofences() -> [Geofence] {
     guard let savedData = UserDefaults.standard.data(forKey: PreferencesKeys.savedItems.rawValue) else { return [] }
     let decoder = JSONDecoder()
-    if let savedGeotifications = try? decoder.decode(Array.self, from: savedData) as [Geofence] {
-      return savedGeotifications
+    if let savedGeofences = try? decoder.decode(Array.self, from: savedData) as [Geofence] {
+      return savedGeofences
     }
     return []
   }

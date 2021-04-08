@@ -14,17 +14,20 @@ protocol GeofenceDelegate : class {
     func addAnotation(geofence : Geofence)
     func removeAnotation(geofence: Geofence)
 }
-
+enum PreferencesKeys: String {
+  case savedItems
+}
 
 class GeofenceManager :NSObject {
     static let shared = GeofenceManager()
     let locationManager = CLLocationManager()
-    var completion : ((CLLocation) -> Void)?
+    var completion : (([CLLocation]) -> Void)?
     var managerCompletion : ((CLLocationManager) -> Void)?
     weak var delegate: GeofenceDelegate?
     var geofences: [Geofence] = []
+    var regionList : [String]! = []
     
-    public func getUserLocation(completion : @escaping ((CLLocation) -> Void)){
+    public func getUserLocation(completion : @escaping (([CLLocation]) -> Void)){
         self.completion =  completion
 //        manager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
@@ -33,31 +36,91 @@ class GeofenceManager :NSObject {
         locationManager.distanceFilter = 100
         loadAllGeofences()
 
+        updateGeofenceManually()
     }
 
+    //Update Geofence Manually
+    func  updateGeofenceManually()  {
+        
+        regionList.append("37.3349285,-122.011033")                    //Apple
+
+        regionList.append("37.422,-122.084058") //Google
+        for i in 0..<regionList.count
+
+        {
+
+            if i == 0 {
+            
+//                let region = regionList.object(at: i) as! String
+            let region = regionList[0]
+
+            let regionArr = region.components(separatedBy: ",")
+
+          
+            let lat = (regionArr[0] as NSString).doubleValue
+
+            let long = (regionArr[1] as NSString).doubleValue
+            
+            let geofenceRegionCenter = CLLocationCoordinate2DMake(lat, long)
+            let geofence = Geofence(
+                coordinate: geofenceRegionCenter,
+              radius: 100,
+              identifier: "Apple",
+              note: "Entry Apple!",
+                eventType: .onEntry)
+                self.geofences.append(geofence)
+                self.startMonitoring(geofence:geofence)
+        }
+        else {
+//                let region = regionList.object(at: i) as! String
+            let region = regionList[1]
+
+            let regionArr = region.components(separatedBy: ",")
+
+          
+            let lat = (regionArr[0] as NSString).doubleValue
+
+            let long = (regionArr[1] as NSString).doubleValue
+            
+            let geofenceRegionCenter = CLLocationCoordinate2DMake(lat, long)
+            let geofence = Geofence(
+                coordinate: geofenceRegionCenter,
+              radius: 100,
+              identifier: "Google",
+              note: "Exit Goole!",
+                eventType: .onExit)
+            self.geofences.append(geofence)
+            self.startMonitoring(geofence:geofence)
+        }
+        
+//            self.locationManager.startMonitoring(for: self.geofences.region[0])
+        }
+    }
+        
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            Log.i("\(location)")
-            completion?(location)
-        }
+//        if let location = locations.last {
+            Log.i("\(locations)")
+            completion?(locations)
+//        }
     }
     
     
     // MARK: Loading and saving functions
     func loadAllGeofences() {
       geofences.removeAll()
-        let allGeotifications = Geofence.allGeofences()
-      allGeotifications.forEach { addGeofence($0) }
+        let allGeofences = Geofence.allGeofences()
+      allGeofences.forEach { addGeofence($0) }
     }
 
     public func saveAllGeofence() {
       let encoder = JSONEncoder()
       do {
         let data = try encoder.encode(geofences)
-        UserDefaults.standard.set(data, forKey: PreferencesKeys.savedItems.rawValue)
+        UserDefaults.standard.set(data,forKey: PreferencesKeys.savedItems.rawValue)
+        
       } catch {
-        Log.e("error encoding geotifications")
+        Log.e("error encoding geofences")
       }
     }
     
@@ -78,7 +141,7 @@ class GeofenceManager :NSObject {
     // MARK: Put monitoring functions below
     public func startMonitoring(geofence: Geofence) {
       if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
-        //Print Error or pass Error
+        Log.e("Error")
         return
       }
         let fenceRegion = geofence.region
@@ -107,7 +170,7 @@ extension GeofenceManager: CLLocationManagerDelegate {
 
       if status != .authorizedAlways {
         let message = """
-        Your geotification is saved but will only be activated once you grant
+        Your geofence is saved but will only be activated once you grant
         Geotify permission to access the device location.
         """
         Log.w(message)
