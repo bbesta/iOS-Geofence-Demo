@@ -4,30 +4,35 @@ Setup Geofences and get notifications when the device enters or leaves the geofe
 ## Instructions / Testing
  - Clone The Repo.
  - Build in Xcode; run on Simulator.
- - Use the included GoToGameTest.gpx file with the Simulate Location.
- - Go to the Emulator , click on the options menu of the emulator on Bottom Right side . Now in the New Screen click on the Routes Tab (Upper Side on the Map) and after then click on the import gpx button bottom of the map.
- - After Launching the App The GeoFence Test Data Will be Added and then Click on the Play Button on The Extended Control Screen.
+ - Use the included SimulatedLocations.gpx file with the Simulate Location.
+ -  To test in simulator you can use .GPX file (add GPX file file-> new -> under resource section there will option of GPX file)
+ - For using GPX file when app is running in simulator there is option in xCode (debug -> simulate location -> select your GPX file)
+
 
 
 ## Technical Design Note
+/Users/balaji/Documents/MSysProjects/POC/IMG-20210408-WA0007.jpeg
+
 The GeoFence App  includes modules :
-- ### 1.View
-- ### 2.Engine
-- ### 3.Util
+- ### 1.Geofence Engine
+- ### 2.Utilities
+- ### 3.GPX
+- ### 4.logger
 
-# View
+
+# Geofence Engine
 The View Is Just a Ui with having two parts 
- - The Map
- - The Logger
+ - Model
+ - View
+ - Geofence Manager
 
-### Map Is Pointing all the GeoFences with red Marker .
+### Model is represent the codingkey of objects, represent the MKAnnotation and notification for the region
+### View Map Is Pointing all the GeoFences with red Marker .
 You can Longpress on the Map To Add that Respective Location as Geofence
 
 ### The Logger is showing all the entries,exit and messages [Info or Error] with time and index.
 eg.
-1. Info Entered 26 March 2020 12:21:12
-
-# Engine
+### Geofence Manager
 The Engine is the Logical Part to Manage and Add GeoFence , its having Three Parts
 - [FenceManager] 
 - [GeoFence] 
@@ -41,14 +46,14 @@ The Engine is the Logical Part to Manage and Add GeoFence , its having Three Par
 - GeoFenceBroadcastReceiver:
 > The job of GBR is to receive the pending intents for every GeoFence location and show it according to the transaction type or error on the UI.
 
-# Util:
+
+# Utilities:
 The Util contains two Things  
-  - Logger 
-  - Util
+  - Show the alert message on view 
+
 ## Logger:
 - This is just a model class and with an enum class 
 ## Util:
 - The Util class is having only one method namely errorMessage just to check the error type .
 
 
- #### The Application is also having crashlytics integrated.
