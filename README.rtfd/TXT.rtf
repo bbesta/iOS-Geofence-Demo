@@ -1,0 +1,89 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2578
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 HelveticaNeue;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red27\green31\blue34;\red255\green255\blue255;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c14118\c16078\c18039;\cssrgb\c100000\c100000\c100000;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww25300\viewh16180\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+# iOS-Geofence-Demo\
+Setup Geofences and get notifications when the device enters or leaves the geofence.\
+\
+## Instructions / Testing\
+ - Clone The Repo.\
+ - Build in Xcode; run on Simulator.\
+ - Use the included SimulatedLocations.gpx file with the Simulate Location.\
+ -  To test in simulator you can use .GPX file (add GPX file file-> new -> under resource section there will option of GPX file)\
+ - For using GPX file when app is running in simulator there is option in xCode (debug -> simulate location -> select your GPX file)\
+\
+\
+\
+## Technical Design Note\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Screenshot 2021-04-08 at 2.58.49 PM.png \width14160 \height13720 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\
+The GeoFence App  includes modules :\
+- ### 1.Geofence Engine\
+- ### 2.Utilities\
+- ### 3.GPX\
+- ### 4.logger\
+\
+\
+# Geofence Engine\
+The View Is Just a Ui with having two parts \
+ - Model\
+ - View\
+ - Geofence Manager\
+\
+### Model is represent the codingkey of objects, represent the MKAnnotation and notification for the region\
+### View Map Is Pointing all the GeoFences with red Marker .\
+You can Longpress on the Map To Add that Respective Location as Geofence\
+\
+### The Logger is showing all the entries,exit and messages [Info or Error] with time and index.\
+eg.\
+### Geofence Manager\
+The Engine is the Logical Part to Manage and Add GeoFence , its having Three Parts\
+- [FenceManager] \
+- [GeoFence] \
+- [GeoFenceBroadCastReceiver] \
+  \
+- FenceManager:\
+> The Job of Fence Manager is to Initialize the GeoFenceClient and using a Fence Obj as Entity to build the GeoFence.\
+- GeoFence:\
+> GeoFence is a Single Entity which contains information about geofence\
+> like (ID: String, lat: Double,long:Double, radius: Float, name:String,transitionTypes: Int) . \
+- GeoFenceBroadcastReceiver:\
+> The job of GBR is to receive the pending intents for every GeoFence location and show it according to the transaction type or error on the UI.\
+\
+\
+# Utilities:\
+The Util contains two Things  \
+  - Show the alert message on view \
+\
+## Logger:\
+- This is just a model class and with an enum class \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 ### Inspired by:\
+[Geofence iOS](
+\f2\fs32 \cf3 \cb4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 https://www.raywenderlich.com/5470-geofencing-with-core-location-getting-started
+\f1\fs24 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 )\
+\pard\pardeftab720\sa320\partightenfactor0
+
+\f2\fs32 \cf3 \cb4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\
+}
