@@ -14,10 +14,7 @@ enum PreferencesKeys: String {
 }
 
 class GeofenceViewController: UIViewController {
-//    private let map : MKMapView = {
-//        let map = MKMapView()
-//        return map
-//    }()
+
     @IBOutlet weak var map: MKMapView!
 
     
@@ -27,17 +24,18 @@ class GeofenceViewController: UIViewController {
         let locationBarButtonItem = UIBarButtonItem(title: "Location", style: .done, target: self, action: #selector(zoomToCurrentLocation(sender:)))
             self.navigationItem.leftBarButtonItem  = locationBarButtonItem
         
-        GeofenceMaanger.shared.getUserLocation(completion: { [weak self] location in
+        GeofenceManager.shared.getUserLocation(completion: { [weak self] location in
             DispatchQueue.main.async {
                 guard let strongSelf = self else{
                     return
                 }
-                
+
                 strongSelf.addMapPin(with: location)
             }
 
         })
         
+        GeofenceManager.shared.delegate = self
         
     }
 
@@ -48,13 +46,25 @@ class GeofenceViewController: UIViewController {
         map.addAnnotation(pin)
         map.zoomToLocation(self.map.userLocation.location)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      if segue.identifier == "addGeofence",
+        let navigationController = segue.destination as? UINavigationController,
+        let addVC = navigationController.viewControllers.first as? AddGeofenceViewController {
+        addVC.delegate = self
+      }
+    }
     // MARK: - Other functions
     @objc func zoomToCurrentLocation(sender: AnyObject) {
         map.zoomToLocation(self.map.userLocation.location)
       
         
     }
-    
+    func note(from identifier: String) -> String? {
+      let geofences = Geofence.allGeofences()
+      let matched = geofences.first { $0.identifier == identifier }
+      return matched?.note
+    }
 
 }
 // MARK: - MapView Delegate
@@ -91,19 +101,15 @@ extension GeofenceViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
       // Delete geotification
       guard let geofence = view.annotation as? Geofence else { return }
-        GeofenceMaanger.shared.stopMonitoring(geofence: geofence)
+        GeofenceManager.shared.stopMonitoring(geofence: geofence)
      
-        GeofenceMaanger.shared.removeGeofence(geofence)
-        GeofenceMaanger.shared.saveAllGeofence()
+        GeofenceManager.shared.removeGeofence(geofence)
+        GeofenceManager.shared.saveAllGeofence()
     }
 }
 // MARK: - Geofence Delegate
 extension GeofenceViewController : GeofenceDelegate{
-    func updateUserLocation(_ authorization: Bool) {
-        map.showsUserLocation = authorization
-//        map.zoomToLocation(map.userLocation.location)
-    }
-    
+
     
     func addAnotation(geofence: Geofence) {
         map.addAnnotation(geofence)
@@ -112,28 +118,15 @@ extension GeofenceViewController : GeofenceDelegate{
     func removeAnotation(geofence: Geofence) {
         map.removeAnnotation(geofence)
     }
-    
-    func didStartMontioring() {
-        //Required
-    }
-    
-    func didStopMontioring() {
-        //Required
-    }
-    
-    func didEnterGeofence(geofence: Geofence) {
-        let fenceRegion = geofence.region
-        manager.startMonitoring(for: fenceRegion)
-    }
-    func didExitGeofence(geofence: Geofence) {
-        for region in manager.monitoredRegions {
-          guard
-            let circularRegion = region as? CLCircularRegion,
-            circularRegion.identifier == geofence.identifier
-          else { continue }
 
-          manager.stopMonitoring(for: circularRegion)
-        }
+    func didEnterGeofence(region : CLCircularRegion) {
+        print("didEnterGeofence",region.identifier)
+        guard let message = note(from: region.identifier) else { return }
+        showAlert(withTitle: "alert", message: message)
+    }
+    func didExitGeofence(region : CLCircularRegion) {
+        guard let message = note(from: region.identifier) else { return }
+        showAlert(withTitle: "alert", message: message)
     }
     
 }
@@ -143,4 +136,16 @@ extension MKMapView {
     let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10_000, longitudinalMeters: 10_000)
     setRegion(region, animated: true)
   }
+}
+// MARK: AddGeofenceViewControllerDelegate
+extension GeofenceViewController: AddGeofenceViewControllerDelegate {
+    func addGeofenceViewController(_ controller: AddGeofenceViewController, didAddGeotification geofence: Geofence) {
+        controller.dismiss(animated: true, completion: nil)
+
+        geofence.clampRadius(maxRadius:
+                                GeofenceManager.shared.locationManager.maximumRegionMonitoringDistance)
+        GeofenceManager.shared.addGeofence(geofence)
+        GeofenceManager.shared.startMonitoring(geofence: geofence)
+        GeofenceManager.shared.saveAllGeofence()
+    }
 }

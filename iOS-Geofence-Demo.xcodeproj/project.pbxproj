@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD466260261ECA72000ABA65 /* AddGeofenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD46625F261ECA72000ABA65 /* AddGeofenceViewController.swift */; };
 		AD89FB0D261D9CEC007EDB2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */; };
 		AD89FB0F261D9CEC007EDB2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */; };
 		AD89FB14261D9CEC007EDB2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD89FB12261D9CEC007EDB2D /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD46625F261ECA72000ABA65 /* AddGeofenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGeofenceViewController.swift; sourceTree = "<group>"; };
 		AD89FB09261D9CEC007EDB2D /* iOS-Geofence-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Geofence-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				AD89FB8A261DD8AA007EDB2D /* GeofenceViewController.swift */,
+				AD46625F261ECA72000ABA65 /* AddGeofenceViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				AD89FB0F261D9CEC007EDB2D /* SceneDelegate.swift in Sources */,
 				AD89FB99261DEB5B007EDB2D /* Geofence.swift in Sources */,
 				AD89FB8B261DD8AA007EDB2D /* GeofenceViewController.swift in Sources */,
+				AD466260261ECA72000ABA65 /* AddGeofenceViewController.swift in Sources */,
 				AD89FB79261DD60F007EDB2D /* GeofenceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

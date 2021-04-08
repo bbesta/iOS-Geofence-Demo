@@ -9,85 +9,45 @@ import UIKit
 import CoreLocation
 
 protocol GeofenceDelegate : class {
-    func didEnterGeofence(geofence : Geofence)
-    func didExitGeofence(geofence : Geofence)
-    func didStartMontioring()
-    func didStopMontioring()
-    func updateUserLocation(_ authorization: Bool)
+    func didEnterGeofence(region : CLCircularRegion)
+    func didExitGeofence(region : CLCircularRegion)
     func addAnotation(geofence : Geofence)
     func removeAnotation(geofence: Geofence)
 }
-let manager = CLLocationManager()
 
-class GeofenceMaanger :NSObject {
-    static let shared = GeofenceMaanger()
-    
+
+class GeofenceManager :NSObject {
+    static let shared = GeofenceManager()
+    let locationManager = CLLocationManager()
     var completion : ((CLLocation) -> Void)?
     var managerCompletion : ((CLLocationManager) -> Void)?
     weak var delegate: GeofenceDelegate?
-    
     var geofences: [Geofence] = []
     
     public func getUserLocation(completion : @escaping ((CLLocation) -> Void)){
         self.completion =  completion
 //        manager.requestWhenInUseAuthorization()
-        manager.requestAlwaysAuthorization()
-        manager.delegate = self
-        manager.startUpdatingLocation()
-        manager.distanceFilter = 100
+        locationManager.requestAlwaysAuthorization()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+        locationManager.distanceFilter = 100
+        loadAllGeofences()
 
     }
-//    public func getUserLocationManager(completion : @escaping ((CLLocationManager) -> Void)){
-//        self.managerCompletion =  completion
-//        manager.requestWhenInUseAuthorization()
-//        manager.delegate = self
-//        manager.startUpdatingLocation()
-//        manager.distanceFilter = 100
-//
-//    }
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             print("New location is \(location)")
+            
+
             completion?(location)
-            startMonitoring(geotification: geotification)
         }
     }
-    func locationManager(_ manager: CLLocationManager,
-      didEnterRegion region: CLRegion
-    ) {
-      if region is CLCircularRegion {
-        handleEvent(for: region)
-      }
-    }
-
-    func locationManager(_ manager: CLLocationManager,
-      didExitRegion region: CLRegion
-    ) {
-      if region is CLCircularRegion {
-        handleEvent(for: region)
-      }
-    }
-  func handleEvent(for region: CLRegion) {
-      print("Geofence triggered!")
-  }
-//    func locationManager(_ manager : CLLocationManager, didUpdateLocations locations : [CLLocation]) {
-//        guard let location = locations.first else {
-//        return
-//        }
-//        completion?(location)
-////        manager.stopUpdatingLocation()
-//    }
-//    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
-//        guard let location = oldLocation else {
-//        return
-//        }
-//        completion?(location)
-//    }
-
+    
     
     // MARK: Loading and saving functions
-    func loadAllGeotifications() {
+    func loadAllGeofences() {
       geofences.removeAll()
         let allGeotifications = Geofence.allGeofences()
       allGeotifications.forEach { addGeofence($0) }
@@ -108,6 +68,8 @@ class GeofenceMaanger :NSObject {
     func addGeofence(_ geofence: Geofence)  {
         geofences.append(geofence)
         delegate?.addAnotation(geofence: geofence)
+//        addRadiusOverlay(forGeotification: geofences)
+//        updateGeotificationsCount()
         
     }
     func removeGeofence(_ geofence: Geofence)  {
@@ -116,42 +78,37 @@ class GeofenceMaanger :NSObject {
         delegate?.removeAnotation(geofence: geofence)
     }
     
-    
+
     // MARK: Put monitoring functions below
     public func startMonitoring(geofence: Geofence) {
       if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
         //Print Error or pass Error
         return
       }
-//        let fenceRegion = geofence.region
-//      manager.startMonitoring(for: fenceRegion)
-        delegate?.didEnterGeofence(geofence: geofence)
+        let fenceRegion = geofence.region
+      locationManager.startMonitoring(for: fenceRegion)
+
     }
 
     public func stopMonitoring(geofence: Geofence) {
-      for region in manager.monitoredRegions {
+      for region in locationManager.monitoredRegions {
         guard
           let circularRegion = region as? CLCircularRegion,
           circularRegion.identifier == geofence.identifier
         else { continue }
 
-//        manager.stopMonitoring(for: circularRegion)
-        delegate?.didExitGeofence(geofence: geofence)
+        locationManager.stopMonitoring(for: circularRegion)
         
       }
     }
     
 }
 // MARK: - Location Manager Delegate
-extension GeofenceMaanger: CLLocationManagerDelegate {
+extension GeofenceManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 
       let status = manager.authorizationStatus
 
-//      mapView.showsUserLocation = (status == .authorizedAlways)
-
-        delegate?.updateUserLocation(true)
-        
       if status != .authorizedAlways {
         let message = """
         Your geotification is saved but will only be activated once you grant
@@ -161,6 +118,30 @@ extension GeofenceMaanger: CLLocationManagerDelegate {
 //        showAlert(withTitle: "Warning", message: message)
       }
     }
+    func locationManager(_ manager: CLLocationManager,
+      didEnterRegion region: CLRegion
+    ) {
+      if region is CLCircularRegion {
+        handleEvent(for: region)
+      }
+        
+       
+        delegate?.didEnterGeofence(region: region as! CLCircularRegion)
+    }
+
+    func locationManager(_ manager: CLLocationManager,
+      didExitRegion region: CLRegion
+    ) {
+      if region is CLCircularRegion {
+        handleEvent(for: region)
+      }
+        delegate?.didExitGeofence(region: region as! CLCircularRegion)
+    }
+  func handleEvent(for region: CLRegion) {
+      print("Geofence triggered!")
+    
+
+  }
 
     func locationManager(_ manager: CLLocationManager,monitoringDidFailFor region: CLRegion?,withError error: Error) {
       guard let region = region else {
@@ -176,3 +157,4 @@ extension GeofenceMaanger: CLLocationManagerDelegate {
     
   
 }
+
