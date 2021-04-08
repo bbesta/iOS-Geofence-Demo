@@ -38,9 +38,7 @@ class GeofenceManager :NSObject {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            print("New location is \(location)")
-            
-
+            Log.i("\(location)")
             completion?(location)
         }
     }
@@ -59,7 +57,7 @@ class GeofenceManager :NSObject {
         let data = try encoder.encode(geofences)
         UserDefaults.standard.set(data, forKey: PreferencesKeys.savedItems.rawValue)
       } catch {
-        print("error encoding geotifications")
+        Log.e("error encoding geotifications")
       }
     }
     
@@ -68,8 +66,6 @@ class GeofenceManager :NSObject {
     func addGeofence(_ geofence: Geofence)  {
         geofences.append(geofence)
         delegate?.addAnotation(geofence: geofence)
-//        addRadiusOverlay(forGeotification: geofences)
-//        updateGeotificationsCount()
         
     }
     func removeGeofence(_ geofence: Geofence)  {
@@ -114,45 +110,46 @@ extension GeofenceManager: CLLocationManagerDelegate {
         Your geotification is saved but will only be activated once you grant
         Geotify permission to access the device location.
         """
-        print("warning!")
-//        showAlert(withTitle: "Warning", message: message)
+        Log.w(message)
       }
     }
     func locationManager(_ manager: CLLocationManager,
       didEnterRegion region: CLRegion
     ) {
       if region is CLCircularRegion {
+        delegate?.didEnterGeofence(region: region as! CLCircularRegion)
         handleEvent(for: region)
       }
         
        
-        delegate?.didEnterGeofence(region: region as! CLCircularRegion)
+        
     }
 
     func locationManager(_ manager: CLLocationManager,
       didExitRegion region: CLRegion
     ) {
       if region is CLCircularRegion {
+        delegate?.didExitGeofence(region: region as! CLCircularRegion)
         handleEvent(for: region)
       }
-        delegate?.didExitGeofence(region: region as! CLCircularRegion)
+        
     }
   func handleEvent(for region: CLRegion) {
-      print("Geofence triggered!")
+    Log.i("Geofence triggered!")
     
-
   }
 
     func locationManager(_ manager: CLLocationManager,monitoringDidFailFor region: CLRegion?,withError error: Error) {
       guard let region = region else {
-        print("Monitoring failed for unknown region")
+        
+        Log.e("Monitoring failed for unknown region")
         return
       }
-      print("Monitoring failed for region with identifier: \(region.identifier)")
+        Log.e("Monitoring failed for region with identifier: \(region.identifier)")
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-      print("Location Manager failed with the following error: \(error)")
+        Log.e("Location Manager failed with the following error: \(error)")
     }
     
   

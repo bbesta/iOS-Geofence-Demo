@@ -91,11 +91,11 @@ func handleEvent(for region: CLRegion) {
       trigger: trigger)
     UNUserNotificationCenter.current().add(request) { error in
       if let error = error {
-        print("Error: \(error)")
+        Log.e("Error: \(error)")
       }
     }
   }
-//    print("Geofence triggered!")
+
 }
 
 func note(from identifier: String) -> String? {

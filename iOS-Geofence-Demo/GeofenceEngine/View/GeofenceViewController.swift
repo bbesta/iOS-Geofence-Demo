@@ -16,7 +16,6 @@ enum PreferencesKeys: String {
 class GeofenceViewController: UIViewController {
 
     @IBOutlet weak var map: MKMapView!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,7 +119,7 @@ extension GeofenceViewController : GeofenceDelegate{
     }
 
     func didEnterGeofence(region : CLCircularRegion) {
-        print("didEnterGeofence",region.identifier)
+        Log.d(region.identifier)
         guard let message = note(from: region.identifier) else { return }
         showAlert(withTitle: "alert", message: message)
     }
@@ -141,9 +140,8 @@ extension MKMapView {
 extension GeofenceViewController: AddGeofenceViewControllerDelegate {
     func addGeofenceViewController(_ controller: AddGeofenceViewController, didAddGeotification geofence: Geofence) {
         controller.dismiss(animated: true, completion: nil)
-
         geofence.clampRadius(maxRadius:
-                                GeofenceManager.shared.locationManager.maximumRegionMonitoringDistance)
+        GeofenceManager.shared.locationManager.maximumRegionMonitoringDistance)
         GeofenceManager.shared.addGeofence(geofence)
         GeofenceManager.shared.startMonitoring(geofence: geofence)
         GeofenceManager.shared.saveAllGeofence()

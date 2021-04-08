@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AD466260261ECA72000ABA65 /* AddGeofenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD46625F261ECA72000ABA65 /* AddGeofenceViewController.swift */; };
+		AD466269261EEF9F000ABA65 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD466268261EEF9F000ABA65 /* Logger.swift */; };
 		AD89FB0D261D9CEC007EDB2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */; };
 		AD89FB0F261D9CEC007EDB2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */; };
 		AD89FB14261D9CEC007EDB2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD89FB12261D9CEC007EDB2D /* Main.storyboard */; };
@@ -40,9 +41,10 @@
 
 /* Begin PBXFileReference section */
 		AD46625F261ECA72000ABA65 /* AddGeofenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGeofenceViewController.swift; sourceTree = "<group>"; };
+		AD466268261EEF9F000ABA65 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		AD89FB09261D9CEC007EDB2D /* iOS-Geofence-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Geofence-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD89FB0C261D9CEC007EDB2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		AD89FB0E261D9CEC007EDB2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		AD89FB13261D9CEC007EDB2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD89FB15261D9CEE007EDB2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD89FB18261D9CEE007EDB2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -87,9 +89,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD466267261EEF63000ABA65 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				AD466268261EEF9F000ABA65 /* Logger.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
 		AD89FB00261D9CEB007EDB2D = {
 			isa = PBXGroup;
 			children = (
+				AD466267261EEF63000ABA65 /* Debug */,
 				AD89FB0B261D9CEC007EDB2D /* iOS-Geofence-Demo */,
 				AD89FB22261D9CEE007EDB2D /* iOS-Geofence-DemoTests */,
 				AD89FB2D261D9CEE007EDB2D /* iOS-Geofence-DemoUITests */,
@@ -323,6 +334,7 @@
 				AD89FB8B261DD8AA007EDB2D /* GeofenceViewController.swift in Sources */,
 				AD466260261ECA72000ABA65 /* AddGeofenceViewController.swift in Sources */,
 				AD89FB79261DD60F007EDB2D /* GeofenceManager.swift in Sources */,
+				AD466269261EEF9F000ABA65 /* Logger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
